@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server for Arduino and React communication",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.1.3"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "arduino",
+    "react",
+    "server"
+  ],
+  "author": "",
+  "license": "ISC"
+}
