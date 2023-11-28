@@ -1,3 +1,5 @@
+'use client'
+
 import VegetableItem from "@/components/VegetableItem"
 import Image from 'next/image'
 import { useEffect, useRef, useState } from "react";
@@ -67,6 +69,7 @@ export default function Home() {
 
   const handleChangeMode = (e) => {
     setModeManuel(!modeManuel);
+    console.log(modeManuel);
   }
 
   return (
@@ -96,7 +99,7 @@ export default function Home() {
   <div className="modal__overlay" data-micromodal-close>
     <div className="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
       <header className="modal__header">
-        <h2 className="modal__title" id="modal-1-title" ref={titleModal} onClick={handleChangeMode}></h2>
+        <h2 className="modal__title" id="modal-1-title" ref={titleModal}></h2>
         <button className="modal__close" aria-label="Close modal" data-micromodal-close><Image src={close} alt="buttonCloseModal"/></button>
       </header>
     </div>
@@ -111,10 +114,10 @@ export default function Home() {
         <button className="modal__close" aria-label="Close modal" data-micromodal-close><Image src={close} alt="buttonCloseModal"/></button>
       </header>
       <div className="changeMode">
-        <h2>Mode manuel</h2>
-          <label class="switch">
-            <input type="checkbox" name="changeMode" id="changeMode" ref={changeMode}/>
-            <span class="slider round"></span>
+          <h2>Mode manuel</h2>
+          <label className="switch">
+            <input type="checkbox" name="changeMode" id="changeMode" ref={changeMode} onClick={handleChangeMode}/>
+            <span className="slider round"></span>
           </label>
       </div>
       <div className="infos">
@@ -132,12 +135,12 @@ export default function Home() {
             <div className="infos__item__value">120km/h</div>
           </div>
       </div>    
-      <div className="settings">
+      <div className={modeManuel ? 'settings clickable' : 'settings'}>
       <h2>Paramètres:</h2>
         <div className="settings__item">
-          <label class="switch">
+          <label className="switch">
             <input type="checkbox"  name="openPannel" id="openPannel"/>
-            <span class="slider round"></span>
+            <span className="slider round"></span>
           </label>
           <div>
             <Image src={openPannel} alt="Ouverture de la serre img" width={30} height={30}/>
@@ -145,13 +148,13 @@ export default function Home() {
           </div>
         </div>
         <div className="settings__item">
-          <label class="switch">
+          <label className="switch">
             <input type="checkbox"  name="watering" id="watering"/>
-            <span class="slider round"></span>
+            <span className="slider round"></span>
           </label>
           <div>
             <Image src={watering} alt="watering img" width={30} height={30}/>
-            <h3 for="watering">Activer l'arrosage</h3>
+            <h3>Activer l'arrosage</h3>
           </div>
         </div>
       </div>  
