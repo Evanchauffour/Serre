@@ -1,19 +1,22 @@
 .containerWidget{
+    width: calc(50% - 10px);
     padding: 20px;
     border-radius: 10px;
     font-family:  Poppins;
-    background: #e0e0e0;
-    box-shadow:  20px 20px 60px #bebebe,
-                -20px -20px 60px #ffffff;
+    background: #f1f1f1;
+    box-shadow:  14px 14px 27px #8b8b8b,
+             -14px -14px 27px #ffffff;
     margin-bottom: 30px;
     .header{
         display: flex;
-        margin-bottom: 10px;
-        h2{
+        margin-bottom: 20px;
+        gap: 10px;
+        h3{
             color: #2196F3;
+            font-size: 1.5rem;
         }
     }
     p{
-        font-size: 1.5rem;
+        font-size: 1.1rem;
     }
 }

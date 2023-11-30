@@ -63,7 +63,7 @@ void setup() {
 
 void loop() {
   anemometre();
-  //temperature();
+  temperature();
   //waterControl();
 }
 

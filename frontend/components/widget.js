@@ -6,7 +6,7 @@ export default function widget({children, name, image}) {
     <div className='containerWidget'>
         <div className='header'>
             <Image src={image} width={30} height={30} alt="icon widget"/>
-            <h2>{name}</h2>
+            <h3>{name}</h3>
         </div>
         {children}
     </div>

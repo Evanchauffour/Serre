@@ -145,8 +145,35 @@ body {
   margin-bottom: 50px;
 }
 .containerHome .content {
+  margin-top: 60px;
   display: flex;
   justify-content: space-between;
+}
+.containerHome .content .left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 50%;
+}
+.containerHome .content .left .containerInformations h2 {
+  font-family: Poppins;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+.containerHome .content .left .containerInformations .ContainerWidgetInformations {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.containerHome .content .left .serreGlobalAction h2 {
+  font-family: Poppins;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+.containerHome .content .left .serreGlobalAction .ContainerWidgetActions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 .containerHome .content .illuSerre {
   width: 800px;
@@ -166,7 +193,6 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  margin-top: 50px;
   font-family: Poppins;
   /* Hide default HTML checkbox */
   /* The slider */
@@ -383,22 +409,172 @@ body {
 }
 
 .containerWidget {
+  width: calc(50% - 10px);
   padding: 20px;
   border-radius: 10px;
   font-family: Poppins;
-  background: #e0e0e0;
-  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+  background: #f1f1f1;
+  box-shadow: 14px 14px 27px #8b8b8b, -14px -14px 27px #ffffff;
   margin-bottom: 30px;
 }
 .containerWidget .header {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  gap: 10px;
 }
-.containerWidget .header h2 {
+.containerWidget .header h3 {
   color: #2196F3;
+  font-size: 1.5rem;
 }
 .containerWidget p {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 4rem;
+  height: 1.8rem;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  width: 1.7rem;
+  height: 1.7rem;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateY(-50%);
+  left: calc(100% - 1.8rem);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.typing-indicator {
+  width: 60px;
+  height: 30px;
+  position: relative;
+  z-index: 4;
+}
+
+.typing-circle {
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  border-radius: 50%;
+  background-color: #2196F3;
+  left: 15%;
+  transform-origin: 50%;
+  animation: typing-circle7124 0.5s alternate infinite ease;
+}
+
+@keyframes typing-circle7124 {
+  0% {
+    top: 20px;
+    height: 5px;
+    border-radius: 50px 50px 25px 25px;
+    transform: scaleX(1.7);
+  }
+  40% {
+    height: 8px;
+    border-radius: 50%;
+    transform: scaleX(1);
+  }
+  100% {
+    top: 0%;
+  }
+}
+.typing-circle:nth-child(2) {
+  left: 45%;
+  animation-delay: 0.2s;
+}
+
+.typing-circle:nth-child(3) {
+  left: auto;
+  right: 15%;
+  animation-delay: 0.3s;
+}
+
+.typing-shadow {
+  width: 5px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 30px;
+  transform-origin: 50%;
+  z-index: 3;
+  left: 15%;
+  filter: blur(1px);
+  animation: typing-shadow046 0.5s alternate infinite ease;
+}
+
+@keyframes typing-shadow046 {
+  0% {
+    transform: scaleX(1.5);
+  }
+  40% {
+    transform: scaleX(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scaleX(0.2);
+    opacity: 0.4;
+  }
+}
+.typing-shadow:nth-child(4) {
+  left: 45%;
+  animation-delay: 0.2s;
+}
+
+.typing-shadow:nth-child(5) {
+  left: auto;
+  right: 15%;
+  animation-delay: 0.3s;
 }
 
 /*# sourceMappingURL=globals.css.map */
