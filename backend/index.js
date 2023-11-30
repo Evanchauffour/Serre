@@ -1,35 +1,96 @@
+// server.js
 const express = require('express');
 const http = require('http');
-const socketIo = require('socket.io');
-const SerialPort = require('serialport');
-const Readline = require('@serialport/parser-readline');
-
-const port = process.env.PORT || 4001;
-const index = require('./routes/index');
+const { Server } = require("socket.io");
 
 const app = express();
-app.use(index);
-
+const cors = require('cors');
 const server = http.createServer(app);
 
-const io = socketIo(server);
 
-const arduinoComPort = "/dev/ttyACM0"; // replace with your Arduino port
-const arduinoSerialPort = new SerialPort(arduinoComPort, { baudRate: 9600 });
-const parser = new Readline();
-arduinoSerialPort.pipe(parser);
 
-io.on("connection", socket => {
-  console.log("New client connected");
 
-  parser.on('data', data =>{
-    console.log(data);
-    socket.emit("FromAPI", data); 
-  });
+const mqtt = require('mqtt');
 
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-  });
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+  }
 });
 
-server.listen(port, () => console.log(`Listening on port ${port}`));
+
+const protocol = 'mqtt'
+const host = 'eu1.cloud.thethings.network'
+const port = '1883'
+const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
+
+const connectUrl = `${protocol}://${host}:${port}`
+
+const topicUp = 'v3/aquarium-mmi@ttn/devices/eui-70b3d57ed0063101/up'
+const topicDown = 'v3/aquarium-mmi@ttn/devices/eui-70b3d57ed0063101/up'
+
+let dataValue = '';
+
+// Création du client MQTT
+const client = mqtt.connect(connectUrl, {
+  clientId,
+  clean: true,
+  connectTimeout: 4000,
+  username: 'aquarium-mmi@ttn',
+  password: 'NNSXS.4FVXSSMEICRRIWYA2M43N7YB5NMKXCMVGW3JFUQ.BYLR3LGE7437GPDNLSJNZ34IYHGAXJRUNGOBEKGSFJ5IBK72VGBQ',
+  reconnectPeriod: 1000,
+})
+
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
+})
+
+
+
+client.on('connect', () => {
+  console.log('Connected');
+  client.subscribe([topicUp], () => {
+    console.log(`Subscribe to topic '${topicUp}'`)
+  })
+
+  // client.publish([topicDown], () => {
+  //   console.log(`Publish to topic '${topicDown}'`)
+  // })
+
+
+})
+
+client.on('error', (error) => {
+  console.error('Erreur de connexion :', error);
+});
+
+client.on('message', (topic, payload) => {
+  const data = JSON.parse(payload.toString()).uplink_message.decoded_payload.bytes;
+  dataValue = String.fromCharCode(...data);
+  console.log(dataValue);
+
+  io.emit('temperature', dataValue);
+})
+
+client.on('reconnect', () => {
+  console.log('Reconnecting...');
+});
+
+client.on('offline', () => {
+  console.log('Client offline');
+});
+
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+server.listen(4000, () => {
+  console.log('Serveur Socket.io écoutant sur le port 4000');
+});
