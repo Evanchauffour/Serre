@@ -1,19 +1,40 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from 'next/link';
+import io from 'socket.io-client';
 import Image from 'next/image';
 import serre from '@/assets/img/aquarium.png';
 import Widget from "@/components/widget";
 import thermometer from '@/assets/img/thermometer.svg';
+import { socket } from '../socket';
+
 
 export default function Home() {
 
   const changeMode = useRef(null);
   const [modeManuel, setModeManuel] = useState(false);
+  const [temperature, setTemperature] = useState(''); 
+
+  const [isConnected, setIsConnected] = useState(socket.connected);
+
+  useEffect(() => {
+    if (isConnected === true) {
+      socket.emit('temperature');
+      socket.on('temperature', (newTemperature) => {
+        setTemperature(newTemperature);
+      });
+    } 
+    socket.on('disconnect', () => {
+      setIsConnected(false);
+      console.log('Vous êtes déconnecté');
+    });
+  }, [isConnected, socket])
 
   const handleChangeMode = (e) => {
     setModeManuel(!modeManuel);
-    console.log(modeManuel);
   }
+
+
+  // console.log(temperature); 
 
   return (
     <div className="containerHome">
@@ -27,7 +48,7 @@ export default function Home() {
       <div className="content">
         <div className="containerInformations">
           <Widget name="Température" image={thermometer}>
-            <p>20°C</p>
+          <p>{temperature !== '' ? `${temperature}°C` : 'Chargement...'}</p>
           </Widget>
           <Widget name="Température" image={thermometer}>
             <p>20°C</p>
