@@ -12,6 +12,8 @@ import humidity from '@/assets/img/humidity.svg';
 import { socket } from '../socket';
 import ButtonToogle from "@/components/buttonToogle";
 import Loader from "@/components/loader";
+import Lottie from "lottie-react";
+import tap from "@/assets/aniamtion/tap.json";
 
 
 export default function Home() {
@@ -81,7 +83,10 @@ export default function Home() {
         </div>
         <div className="right">
           <Link href="/serreDetails">
-              <Image src={serre} alt="serre" className="illuSerre"/>
+              <div className="containerIlluSerre">
+                <Lottie animationData={tap} className="tap"/>
+                <Image src={serre} alt="serre" className="illuSerre"/>
+              </div>
           </Link>
           <div className="changeMode">
             <label className="switch">

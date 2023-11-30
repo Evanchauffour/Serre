@@ -175,18 +175,38 @@ body {
   gap: 20px;
   flex-wrap: wrap;
 }
-.containerHome .content .illuSerre {
-  width: 800px;
+.containerHome .content .right {
+  position: relative;
+  width: 45%;
+  overflow: hidden;
+}
+.containerHome .content .right .containerIlluSerre {
+  position: relative;
+}
+.containerHome .content .right .containerIlluSerre .tap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 10rem;
+  height: 10rem;
+}
+.containerHome .content .right .containerIlluSerre .tap:hover .illuSerre {
+  transform: scale(1.03);
+}
+.containerHome .content .right .containerIlluSerre .illuSerre {
+  width: 100%;
   height: 500px;
   background-size: cover;
   background-position: center;
   margin: 0 auto;
   overflow: visible;
+  overflow: hidden;
+  transition: all 0.5s ease;
 }
-.containerHome .content .illuSerre img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.containerHome .content .right .containerIlluSerre .illuSerre:hover {
+  transform: scale(1.03);
 }
 .containerHome .changeMode {
   display: flex;
@@ -288,28 +308,13 @@ body {
 }
 
 .containerSerreDetails {
-  width: 100%;
   display: flex;
-  gap: 20px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 40px;
-}
-.containerSerreDetails .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 70%;
-}
-.containerSerreDetails .header h1 {
-  font-family: BurbankBigCondensed;
-  font-size: 5rem;
-}
-.containerSerreDetails .header svg {
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
 }
 .containerSerreDetails .serre {
   display: grid;
