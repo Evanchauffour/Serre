@@ -4,11 +4,10 @@ import Image from 'next/image';
 import serre from '@/assets/img/aquarium.png';
 import Widget from "@/components/widget";
 import thermometer from '@/assets/img/thermometer.svg';
-import wind from '@/assets/img/raindrop.svg';
-import raindrop from '@/assets/img/wind.svg';
-import watering from '@/assets/img/watering.svg';
+import windImg from '@/assets/img/wind.svg';
 import opendoor from '@/assets/img/opendoor.svg';
 import humidity from '@/assets/img/humidity.svg';
+import raindrop from '@/assets/img/raindrop.svg';
 import { socket } from '../socket';
 import ButtonToogle from "@/components/buttonToogle";
 import Loader from "@/components/loader";
@@ -20,22 +19,29 @@ export default function Home() {
 
   const changeMode = useRef(null);
   const [modeManuel, setModeManuel] = useState(false);
-  const [temperature, setTemperature] = useState(''); 
+  const [data, setData] = useState(''); 
+  const [dataFilter, setDataFilter] = useState(null); 
 
   const [isConnected, setIsConnected] = useState(socket.connected);
 
   useEffect(() => {
     if (isConnected === true) {
-      socket.emit('temperature');
-      socket.on('temperature', (newTemperature) => {
-        setTemperature(newTemperature);
+      socket.emit('data');
+      socket.on('data', (data) => {
+        setData(data);
+  
+        // Filtrer les données ici
+        const filteredData = data.split('_');
+        setDataFilter(filteredData);
       });
     } 
+  
     socket.on('disconnect', () => {
       setIsConnected(false);
       console.log('Vous êtes déconnecté');
     });
   }, [isConnected, socket])
+  
 
   const handleChangeMode = (e) => {
     setModeManuel(!modeManuel);
@@ -53,17 +59,17 @@ export default function Home() {
             <h2>Informations globales</h2>
             <div className="ContainerWidgetInformations">
               <Widget name="Température" image={thermometer}>
-              <p>{temperature !== '' ? `${temperature}°C` : <Loader />}
+              <p>{data !== '' ? `${dataFilter[1]}°C` : <Loader />}
               </p>
               </Widget>
-              <Widget name="Vitesse du vent" image={raindrop}>
-              <p>{temperature !== '' ? `${temperature}°C` : <Loader />}</p>
+              <Widget name="Vitesse du vent" image={windImg}>
+              <p>{data !== '' ? `${dataFilter[0]} Km/h` : <Loader />}</p>
               </Widget>
-              <Widget name="Humidité" image={wind}>
-              <p>{temperature !== '' ? `${temperature}°C` : <Loader />}</p>
+              <Widget name="Humidité" image={humidity}>
+              <p>{data !== '' ? `${dataFilter[2]} %` : <Loader />}</p>
               </Widget>
-              <Widget name="réservoir d'eau" image={humidity}>
-              <p>{temperature !== '' ? `${temperature}°C` : <Loader />}</p>
+              <Widget name="réservoir d'eau" image={raindrop}>
+              <p>{data !== '' ? `${dataFilter[1]}°C` : <Loader />}</p>
               </Widget>
             </div>
           </div>
@@ -72,9 +78,6 @@ export default function Home() {
             <h2>Actions globales</h2>
             <div className="ContainerWidgetActions">
               <Widget name="Ouverture" image={opendoor}>
-                <ButtonToogle/>
-              </Widget>
-              <Widget name="Arrosage" image={watering}>
                 <ButtonToogle/>
               </Widget>
             </div>
