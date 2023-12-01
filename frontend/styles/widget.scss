@@ -13,10 +13,24 @@
         gap: 10px;
         h3{
             color: #2196F3;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
     }
     p{
         font-size: 1.1rem;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .containerWidget{
+        width: 100%;
+        .header{
+            h3{
+                font-size: 1.3rem;
+            }
+        }
+        p{
+            font-size: 1.1rem;
+        }
     }
 }

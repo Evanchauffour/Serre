@@ -29,7 +29,7 @@ body {
 }
 
 .modal__container {
-  background-color: #fff;
+  background-color: #f1f1f1;
   padding: 30px;
   min-width: 500px;
   min-height: 300px;
@@ -135,7 +135,7 @@ body {
 }
 
 .containerHome {
-  margin: 0 100px;
+  margin: 0 50px;
 }
 .containerHome h1 {
   text-align: center;
@@ -197,7 +197,7 @@ body {
 }
 .containerHome .content .right .containerIlluSerre .illuSerre {
   width: 100%;
-  height: 500px;
+  height: 100%;
   background-size: cover;
   background-position: center;
   margin: 0 auto;
@@ -286,6 +286,50 @@ body {
   border-radius: 50%;
 }
 
+@media screen and (max-width: 1024px) {
+  .containerHome .content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .containerHome .content .left {
+    width: 100%;
+  }
+  .containerHome .content .right {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 30px;
+    width: 70%;
+    margin-top: 20px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .containerHome {
+    margin: 0 20px;
+  }
+}
+@media screen and (max-width: 550px) {
+  .containerHome .content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .containerHome .content .left .containerInformations h2 {
+    font-size: 2rem;
+  }
+  .containerHome .content .left .serreGlobalAction h2 {
+    font-size: 2rem;
+  }
+  .containerHome .content .right {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 425px) {
+  .containerHome .content .left .containerInformations h2 {
+    font-size: 1.5rem;
+  }
+  .containerHome .content .left .serreGlobalAction h2 {
+    font-size: 1.5rem;
+  }
+}
 .itemVegetable {
   display: flex;
   justify-content: center;
@@ -318,7 +362,7 @@ body {
 }
 .containerSerreDetails .serre {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr 1fr;
   gap: 20px;
   width: 70%;
@@ -413,6 +457,28 @@ body {
   font-size: 1.1rem;
 }
 
+.containerContentModal .item {
+  padding: 20px;
+  font-family: Poppins;
+  background: #f1f1f1;
+  border-radius: 10px;
+  margin-top: 20px;
+  background: #f1f1f1;
+  box-shadow: 14px 14px 27px #8b8b8b, -14px -14px 27px #ffffff;
+}
+.containerContentModal .item .header {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+.containerContentModal .item .header h3 {
+  color: #2196F3;
+  font-size: 1.3rem;
+}
+.containerContentModal .item p {
+  font-size: 1.1rem;
+}
+
 .containerWidget {
   width: calc(50% - 10px);
   padding: 20px;
@@ -429,12 +495,23 @@ body {
 }
 .containerWidget .header h3 {
   color: #2196F3;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 .containerWidget p {
   font-size: 1.1rem;
 }
 
+@media screen and (max-width: 550px) {
+  .containerWidget {
+    width: 100%;
+  }
+  .containerWidget .header h3 {
+    font-size: 1.3rem;
+  }
+  .containerWidget p {
+    font-size: 1.1rem;
+  }
+}
 .switch {
   position: relative;
   display: inline-block;
