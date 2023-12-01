@@ -75,7 +75,7 @@ client.on('message', (topic, payload) => {
   dataValue = String.fromCharCode(...data);
   console.log(dataValue);
 
-  io.emit('temperature', dataValue);
+  io.emit('data', dataValue);
 })
 
 client.on('reconnect', () => {
