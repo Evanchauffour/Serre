@@ -86,8 +86,11 @@ void setup() {
 
 void loop() {
   anemometre();
+  humidite();
   temperature();
-  //waterControl();
+  waterControl();
+
+  LoRaE5.sendMsg(_STRING, String(temperature_value) + "_" + String(humidite_value) + "_" + String(smooth_vent) + "_" + String(humiditeCapteur1) + "_" + String(humiditeCapteur2) + "_" + String(humiditeCapteur3) + "_" + String(humiditeCapteur4));
 }
 
 void temperature() {
@@ -107,13 +110,17 @@ void humidite(){
 
 
 void waterControl() {
-  Serial.print("Humidité capteur 1:"); humiditeCapteur1 = analogRead(PortHumidite1);
+  Serial.print("Humidité capteur 1:"); 
+  humiditeCapteur1 = analogRead(PortHumidite1);
   Serial.println(humiditeCapteur1);
-  Serial.print("Humidité capteur 2:"); humiditeCapteur2 = analogRead(PortHumidite2);
+  Serial.print("Humidité capteur 2:"); 
+  humiditeCapteur2 = analogRead(PortHumidite2);
   Serial.println(humiditeCapteur2);
-  Serial.print("Humidité capteur 3:"); humiditeCapteur3 = analogRead(PortHumidite3);
+  Serial.print("Humidité capteur 3:"); 
+  humiditeCapteur3 = analogRead(PortHumidite3);
   Serial.println(humiditeCapteur3);
-  Serial.print("Humidité capteur 4:"); humiditeCapteur4 = analogRead(PortHumidite4);
+  Serial.print("Humidité capteur 4:"); 
+  humiditeCapteur4 = analogRead(PortHumidite4);
   Serial.println(humiditeCapteur4);
   //if (humiditeCapteur1 < 500) {
     //digitalWrite(PortPompe1, LOW);
