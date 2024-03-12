@@ -69,9 +69,13 @@ export default function serreDetails() {
   const openItemModal = (e) => {
     titleModal.current.innerHTML = dataVegetable[e.target.id].name;
     setItemHumidite(data[parseInt(e.target.id, 10) + 2]);
-    console.log(parseInt(e.target.id, 10) + 2);
     MicroModal.show('modal-1');
   }
+
+  const handleActivePompe = () => {
+    setOpendoor(prevOpendoor => !prevOpendoor);
+    socket.emit('publishPompe1', !opendoor);
+  }  
 
   return (
   <>
@@ -109,7 +113,7 @@ export default function serreDetails() {
               <Image src={watering} width={30} height={30} alt="icon widget"/>
               <h3>Arrosage</h3>
           </div>
-          <ButtonToogle/>
+          <ButtonToogle onChange={handleActivePompe}/>
         </div>
       </div>
     </div>

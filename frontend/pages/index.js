@@ -15,9 +15,8 @@ import Loader from "@/components/loader";
 
 export default function Home() {
 
-  const changeMode = useRef(null);
   const [modeManuel, setModeManuel] = useState(false);
-  const [data, setData] = useState(''); 
+  const [data, setData] = useState(null); 
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [opendoor, setOpendoor] = useState(false);
 
@@ -26,7 +25,6 @@ export default function Home() {
       socket.emit('data');
       socket.on('data', (data) => {
         setData(data);
-        console.log(data);
       });
     } 
   
@@ -37,7 +35,7 @@ export default function Home() {
   }, [isConnected, socket])
   
 
-  const handleChangeMode = (e) => {
+  const handleChangeMode = () => {
     setModeManuel(!modeManuel);
   }
 
@@ -56,17 +54,17 @@ export default function Home() {
             <div className="ContainerWidgetInformations">
               <Widget name="Temperature" image={thermometer}>
               <div>
-                {data !== '' ? `${data[0]}°C` : <Loader />}
+                {data ? `${data[0]}°C` : <Loader />}
               </div>
               </Widget>
               <Widget name="Vitesse du vent" image={windImg}>
-              <div>{data !== '' ? `${data[2]} Km/h` : <Loader />}</div>
+              <div>{data ? `${data[2]} Km/h` : <Loader />}</div>
               </Widget>
               <Widget name="Humidite" image={humidity}>
-              <div>{data !== '' ? `${data[1]} %` : <Loader />}</div>
+              <div>{data ? `${data[1]} %` : <Loader />}</div>
               </Widget>
               <Widget name="reservoir d'eau" image={raindrop}>
-              <div>{data !== '' ? `${data[1]}°C` : <Loader />}</div>
+              <div>{data ? `${data[6] === 1 ? 'Réservoir plein' : 'Réservoir vide'}` : <Loader />}</div>
               </Widget>
             </div>
           </div>
@@ -89,7 +87,7 @@ export default function Home() {
           </Link>
           <div className="changeMode">
             <label className="switch">
-              <input type="checkbox" name="changeMode" id="changeMode" ref={changeMode} onClick={handleChangeMode}/>
+              <input type="checkbox" name="changeMode" id="changeMode" onClick={handleChangeMode}/>
               <span className="slider round"></span>
             </label>
           </div>

@@ -53,6 +53,12 @@ io.on('connection', (socket) => {
       console.log(`Publish to topic '${topicDown}': ${data}`);
     });
   });
+
+  socket.on('publishPompe1', (data) => {
+    client.publish(topicDown, `{"downlinks": [{"f_port": 15, "frm_payload":"${data}", "priority": "NORMAL"}]}`, () => {
+      console.log(`Publish to topic '${topicDown}': ${data}`);
+    });
+  });
 })
 
 
