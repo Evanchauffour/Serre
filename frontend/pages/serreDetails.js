@@ -57,10 +57,6 @@ export default function serreDetails() {
       socket.emit('data');
       socket.on('data', (data) => {
         setData(data);
-  
-        // Filtrer les données ici
-        const filteredData = data.split('_');
-        setDataFilter(filteredData);
       });
     } 
   
@@ -72,7 +68,8 @@ export default function serreDetails() {
 
   const openItemModal = (e) => {
     titleModal.current.innerHTML = dataVegetable[e.target.id].name;
-    setItemHumidite(dataVegetable[e.target.id]);
+    setItemHumidite(data[parseInt(e.target.id, 10) + 2]);
+    console.log(parseInt(e.target.id, 10) + 2);
     MicroModal.show('modal-1');
   }
 
@@ -103,9 +100,9 @@ export default function serreDetails() {
         <div className="item">
           <div className='header'>
               <Image src={humidity} width={30} height={30} alt="icon widget"/>
-              <h3>Humidité</h3>
+              <h3>Humidite</h3>
           </div>
-          <p>{data !== '' ? `${itemHumidite} %` : <Loader />}</p>
+          <div>{data !== '' ? `${itemHumidite} %` : <Loader />}</div>
         </div>
         <div className="item">
           <div className='header'>
