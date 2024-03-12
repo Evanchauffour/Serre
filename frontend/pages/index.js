@@ -5,14 +5,12 @@ import serre from '@/assets/img/aquarium.png';
 import Widget from "@/components/widget";
 import thermometer from '@/assets/img/thermometer.svg';
 import windImg from '@/assets/img/wind.svg';
-import opendoor from '@/assets/img/opendoor.svg';
+import opendoorImg from '@/assets/img/opendoor.svg';
 import humidity from '@/assets/img/humidity.svg';
 import raindrop from '@/assets/img/raindrop.svg';
 import { socket } from '../socket';
 import ButtonToogle from "@/components/buttonToogle";
 import Loader from "@/components/loader";
-import Lottie from "lottie-react";
-import tap from "@/assets/aniamtion/tap.json";
 
 
 export default function Home() {
@@ -20,19 +18,15 @@ export default function Home() {
   const changeMode = useRef(null);
   const [modeManuel, setModeManuel] = useState(false);
   const [data, setData] = useState(''); 
-  const [dataFilter, setDataFilter] = useState(null); 
-
   const [isConnected, setIsConnected] = useState(socket.connected);
+  const [opendoor, setOpendoor] = useState(false);
 
   useEffect(() => {
     if (isConnected === true) {
       socket.emit('data');
       socket.on('data', (data) => {
         setData(data);
-  
-        // Filtrer les données ici
-        const filteredData = data.split('_');
-        setDataFilter(filteredData);
+        console.log(data);
       });
     } 
   
@@ -47,8 +41,10 @@ export default function Home() {
     setModeManuel(!modeManuel);
   }
 
-
-  // console.log(temperature); 
+  const handleOpendoor = () => {
+    setOpendoor(prevOpendoor => !prevOpendoor);
+    socket.emit('publish', !opendoor);
+  }  
 
   return (
     <div className="containerHome">
@@ -58,18 +54,19 @@ export default function Home() {
           <div className="containerInformations">
             <h2>Informations globales</h2>
             <div className="ContainerWidgetInformations">
-              <Widget name="Température" image={thermometer}>
-              <p>{data !== '' ? `${dataFilter[1]}°C` : <Loader />}
-              </p>
+              <Widget name="Temperature" image={thermometer}>
+              <div>
+                {data !== '' ? `${data[0]}°C` : <Loader />}
+              </div>
               </Widget>
               <Widget name="Vitesse du vent" image={windImg}>
-              <p>{data !== '' ? `${dataFilter[0]} Km/h` : <Loader />}</p>
+              <div>{data !== '' ? `${data[2]} Km/h` : <Loader />}</div>
               </Widget>
-              <Widget name="Humidité" image={humidity}>
-              <p>{data !== '' ? `${dataFilter[2]} %` : <Loader />}</p>
+              <Widget name="Humidite" image={humidity}>
+              <div>{data !== '' ? `${data[1]} %` : <Loader />}</div>
               </Widget>
-              <Widget name="réservoir d'eau" image={raindrop}>
-              <p>{data !== '' ? `${dataFilter[1]}°C` : <Loader />}</p>
+              <Widget name="reservoir d'eau" image={raindrop}>
+              <div>{data !== '' ? `${data[1]}°C` : <Loader />}</div>
               </Widget>
             </div>
           </div>
@@ -77,8 +74,8 @@ export default function Home() {
           <div className="serreGlobalAction">
             <h2>Actions globales</h2>
             <div className="ContainerWidgetActions">
-              <Widget name="Ouverture" image={opendoor}>
-                <ButtonToogle/>
+              <Widget name="Ouverture" image={opendoorImg}>
+                <ButtonToogle onChange={handleOpendoor}/>
               </Widget>
             </div>
           </div>
@@ -87,7 +84,6 @@ export default function Home() {
         <div className="right">
           <Link href="/serreDetails">
               <div className="containerIlluSerre">
-                <Lottie animationData={tap} className="tap"/>
                 <Image src={serre} alt="serre" className="illuSerre"/>
               </div>
           </Link>

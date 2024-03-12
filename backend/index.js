@@ -8,8 +8,6 @@ const cors = require('cors');
 const server = http.createServer(app);
 
 
-
-
 const mqtt = require('mqtt');
 
 
@@ -28,7 +26,7 @@ const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 const connectUrl = `${protocol}://${host}:${port}`
 
 const topicUp = 'v3/aquarium-mmi@ttn/devices/eui-70b3d57ed0063101/up'
-const topicDown = 'v3/aquarium-mmi@ttn/devices/eui-70b3d57ed0063101/up'
+const topicDown = 'v3/aquarium-mmi@ttn/devices/eui-70b3d57ed0063101/down/push'
 
 let dataValue = '';
 
@@ -49,6 +47,12 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected')
   })
+
+  socket.on('publish', (data) => {
+    client.publish(topicDown, `{"downlinks": [{"f_port": 15, "frm_payload":"${data}", "priority": "NORMAL"}]}`, () => {
+      console.log(`Publish to topic '${topicDown}': ${data}`);
+    });
+  });
 })
 
 
@@ -58,24 +62,18 @@ client.on('connect', () => {
   client.subscribe([topicUp], () => {
     console.log(`Subscribe to topic '${topicUp}'`)
   })
-
-  // client.publish([topicDown], () => {
-  //   console.log(`Publish to topic '${topicDown}'`)
-  // })
-
-
 })
 
 client.on('error', (error) => {
   console.error('Erreur de connexion :', error);
 });
-
+  
 client.on('message', (topic, payload) => {
   const data = JSON.parse(payload.toString()).uplink_message.decoded_payload.bytes;
   dataValue = String.fromCharCode(...data);
-  console.log(dataValue);
+  console.log(data);
 
-  io.emit('data', dataValue);
+  io.emit('data', data);
 })
 
 client.on('reconnect', () => {
