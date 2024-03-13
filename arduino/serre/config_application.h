@@ -7,11 +7,7 @@
 #define PORT                		15
 
 #define SEND_BY_PUSH_BUTTON 		false
-#define FRAME_DELAY         		10000
-//#define PAYLOAD_HELLO				    true
-//#define PAYLOAD_TEMPERATURE    	false
-//#define CAYENNE_LPP_         		false
-#define LOW_POWER           		false
+#define FRAME_DELAY         		100
 
 String devEUI = "70B3D57ED0063101";
 
