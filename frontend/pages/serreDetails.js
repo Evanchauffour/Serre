@@ -36,7 +36,7 @@
     },
   ]
 
-  export default function serreDetails() {
+  export default function SerreDetails() {
 
     const [modeManuel, setModeManuel] = useState(false);
 
