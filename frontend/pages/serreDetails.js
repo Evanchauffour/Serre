@@ -132,7 +132,6 @@
                   <h3>Activer l'arrosage</h3>
                 )}
             </div>
-            {loading ?? }
             <button type="button" disabled={loading} onClick={() => handleActivePompe(pumpId)}>Activer</button>
           </div>
         </div>

@@ -19,6 +19,7 @@ export default function Home() {
   const [data, setData] = useState(null); 
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [opendoor, setOpendoor] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     if (isConnected === true) {
@@ -32,6 +33,7 @@ export default function Home() {
       setIsConnected(false);
       console.log('Vous êtes déconnecté');
     });
+    setIsMounted(true);
   }, [isConnected, socket])
   
 
@@ -45,6 +47,8 @@ export default function Home() {
   }  
 
   return (
+    <>
+    {isMounted && (
     <div className="containerHome">
       <h1>L'aquarium</h1>
       <div className="content">
@@ -94,5 +98,7 @@ export default function Home() {
         </div>
       </div>
     </div>
+    )}
+    </>
   )
 }
